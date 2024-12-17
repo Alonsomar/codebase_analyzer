@@ -1,0 +1,23 @@
+# Directorios típicos a ignorar
+.git
+node_modules
+__pycache__
+dist
+build
+target
+venv
+.venv
+.env
+coverage
+logs
+.tmp
+.DS_Store
+.idea
+
+# Archivos específicos a ignorar
+*.log
+*.lock
+*.tmp
+*.bak
+*.swp
+*.db
