@@ -1,0 +1,47 @@
+# Archivos y carpetas generados por PyInstaller
+/dist/
+/build/
+*.spec
+*.exe
+*.dll
+*.so
+*.o
+*.dmg
+*.app
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Entornos virtuales de Python
+.venv/
+env/
+.venv.bak/
+
+# Configuraciones de IDEs y editores
+.vscode/
+.idea/
+*.swp
+
+# Archivos de log y temporales
+*.log
+*.tmp
+*.bak
+*.~*
+
+# Archivos de pruebas y cobertura
+.coverage
+htmlcov/
+*.pytest_cache/
+*.coverage
+.noseids
+*.test
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos JSON generados por el proyecto
+codebase_summary.json
