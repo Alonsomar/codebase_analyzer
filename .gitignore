@@ -45,3 +45,6 @@ Thumbs.db
 
 # Archivos JSON generados por el proyecto
 codebase_summary.json
+
+# Allow archivo ejecutable del code analyzer
+!codebase_analyzer.exe
