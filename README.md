@@ -17,6 +17,13 @@ Codebase Analyzer es una herramienta que analiza un directorio de código fuente
 - Genera un archivo JSON estructurado con información del codebase.
 - Se puede ejecutar como **script Python** o como **ejecutable PyInstaller**.
 
+### Archivos soportados:
+- Código fuente: `.js`, `.ts`, `.py`
+- Documentación: `.md`, `.txt`
+- Configuración: `.json`, `.yaml`, `.yml`, `.toml`
+- Archivos web: `.html`, `.css`
+- **Stata**: `.do`, `.ado` (detecta bases usadas, guardadas y comandos clave)
+
 ---
 
 ## **Requisitos**

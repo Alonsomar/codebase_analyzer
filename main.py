@@ -2,14 +2,14 @@ import datetime
 import os
 import json
 from ignore_patterns import load_ignored_patterns, list_code_files
-from file_processors import process_js_ts_file, process_python_file, process_plain_file
+from file_processors import process_js_ts_file, process_python_file, process_plain_file, process_stata_file
 
 
 # =========================
 # CONFIGURACIÓN
 # =========================
 OUTPUT_FILE = "codebase_summary.json"
-CODE_EXTENSIONS = {".js", ".ts", ".py", ".html", ".css", ".json", ".yaml", ".yml", ".toml", ".md", ".txt"}
+CODE_EXTENSIONS = {".js", ".ts", ".py", ".html", ".css", ".json", ".yaml", ".yml", ".toml", ".md", ".txt", ".do", ".ado"}
 DOC_FILES = {"README.md", "CHANGELOG.md", "LICENSE", "CONTRIBUTING.md"}
 
 
@@ -69,6 +69,8 @@ def analyze_codebase(base_path=".", output_dir=None):
             extracted_info = process_python_file(file_path)
         elif ext in {".html", ".css", ".json", ".yaml", ".yml", ".toml", ".md", ".txt"}:
             extracted_info = process_plain_file(file_path)
+        elif ext in {".do", ".ado"}:
+            extracted_info = process_stata_file(file_path)
         else:
             extracted_info = {"content": ""}
 

@@ -6,13 +6,20 @@ import ast
 # LECTURA DE CONTENIDO
 # =========================
 def read_file_content(file_path):
-    """Lee el contenido completo del archivo."""
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            return f.read()
-    except Exception as e:
-        print(f"Error leyendo {file_path}: {e}")
-        return ""
+    """Lee el contenido completo del archivo con soporte para múltiples codificaciones."""
+    encodings_to_try = ["utf-8", "utf-16", "iso-8859-1"]
+    for encoding in encodings_to_try:
+        try:
+            with open(file_path, "r", encoding=encoding) as f:
+                return f.read()
+        except UnicodeDecodeError:
+            continue
+        except Exception as e:
+            print(f"Error leyendo {file_path}: {e}")
+            return ""
+    print(f"No se pudo leer {file_path} con las codificaciones probadas.")
+    return ""
+
 
 
 # =========================
@@ -106,3 +113,38 @@ def process_plain_file(file_path):
     """Procesa archivos HTML, CSS, JSON, YAML, etc. Incluye solo su contenido."""
     content = read_file_content(file_path)
     return {"content": content}
+
+
+# =========================
+# PROCESADOR STATA FILES
+# =========================
+def process_stata_file(file_path):
+    """
+    Procesa archivos Stata (.do y .ado) para identificar bases de datos usadas, guardadas y comandos clave.
+    """
+    content = read_file_content(file_path)
+    info = {"used_datasets": [], "saved_datasets": [], "commands": [], "comments": []}
+
+    try:
+        # Identificar bases de datos utilizadas (`use`)
+        used_datasets = re.findall(r"\buse\s+([^\s,]+)", content, re.IGNORECASE)
+
+        # Identificar bases de datos guardadas (`save`)
+        saved_datasets = re.findall(r"\bsave\s+([^\s,]+)", content, re.IGNORECASE)
+
+        # Extraer comandos clave (ejemplo: `graph`, `regress`, `import`, etc.)
+        commands = re.findall(r"(?m)^\s*(graph|regress|summarize|import|gen|replace|merge|append)\b", content)
+
+        # Extraer comentarios (`* comentario`)
+        comments = re.findall(r"(?m)^\s*\*\s*(.*)", content)
+
+        # Guardar resultados en el diccionario
+        info["used_datasets"].extend(used_datasets)
+        info["saved_datasets"].extend(saved_datasets)
+        info["commands"].extend(commands)
+        info["comments"].extend(comments)
+        info["content"] = content
+        return info
+    except Exception as e:
+        print(f"Error procesando {file_path}: {e}")
+        return {"content": content}
